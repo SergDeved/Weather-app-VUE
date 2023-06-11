@@ -18,7 +18,7 @@
         <p v-if="!searchError && mapboxSearchResults.length===0">
           No results match your query, try a different term.
         </p>
-        <template>
+        <template v-else>
           <li
               v-for="searchResult in mapboxSearchResults"
               :key="searchResult.id"
