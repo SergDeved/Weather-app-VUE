@@ -15,7 +15,7 @@
         <p v-if="searchError">
           Sorry, something went weong, please try again.
         </p>
-        <p v-if="!serverError && mapboxSearchResults.length===0">
+        <p v-if="!searchError && mapboxSearchResults.length===0">
           No results match your query, try a different term.
         </p>
         <template>
