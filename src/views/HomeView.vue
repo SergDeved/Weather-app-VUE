@@ -13,7 +13,7 @@
           v-if="mapboxSearchResults"
       >
         <p v-if="searchError">
-          Sorry, something went weong, please try again.
+          Sorry, something went wrong, please try again.
         </p>
         <p v-if="!searchError && mapboxSearchResults.length===0">
           No results match your query, try a different term.
@@ -36,6 +36,21 @@
 <script setup>
 import {ref} from "vue";
 import axios from "axios";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+const previewCity = (searchResult) => {
+  const [city, state] = searchResult.place_name.split(",");
+  router.push({
+    name: "cityView",
+    params: {state: state.replaceAll(" ", ""), city: city},
+    query: {
+      lat: searchResult.geometry.coordinates[1],
+      lng: searchResult.geometry.coordinates[0],
+      preview: true,
+    },
+  });
+};
 
 const mapboxAPIKey =
     "pk.eyJ1Ijoic2VyZ2RldmVkIiwiYSI6ImNsaXI5d3c0dTBzZ2Uza254dDEyMHowa3EifQ.GqBpWiN0JGhtPD1baZZAmw"
@@ -60,6 +75,6 @@ const getSearchResults = () => {
       return;
     }
     mapboxSearchResults.value = null;
-  }, 300);
+  }, 150);
 };
 </script>
